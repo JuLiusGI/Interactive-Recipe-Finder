@@ -1,37 +1,39 @@
-# 🍳 Gourmet Recipe Finder
+# ⚔️ Kitchen RPG: Recipe Finder
 
-A beautiful, interactive web application that helps you discover delicious recipes. Built with a focus on **rich aesthetics** and **smooth user experience**, this app lets you search for ingredients and instantly find culinary inspiration.
+A retro-modern, interactive recipe finder designed with a **"Pixel Playground"** aesthetic. Built using the **NES.css** framework, this interface brings an 8-bit RPG feel to your culinary quest.
 
 **Designed & Built by Julius Pelegrino**
 
-## ✨ Features
+![Project Preview](file:///C:/Users/Julius%20Pelegrino/.gemini/antigravity/brain/cdf685d9-353e-4d2c-953b-f0a4f27b04f6/test_pixel_redesign_1768485075910.webp)
 
-- **Ingredient Search**: Type any ingredient (e.g., "Chicken", "Chocolate", "Pasta") to find relevant recipes.
-- **Aesthetic Design**: Features a warm, appetizing gradient background with floating food emojis for a delightful visual experience.
-- **Glassmorphism UI**: Modern, frosted-glass card design for a premium feel.
-- **Smart Results**: Displays the top 5 recipes with high-quality images and simulated cooking times.
-- **Responsive**: Fully responsive grid layout that looks great on mobile and desktop.
+## ✨ Quest Features
+
+- **Inventory Search**: Type an ingredient ("loot") into the retro input slot to find recipes.
+- **Pixel Art Design**: Features a NES-style interface with sharp 90-degree corners, `Press Start 2P` typography, and a grid background.
+- **Health Bar Loader**: Watch your quest data load with a classic RPG health/mana bar.
+- **Floating Sprites**: Animated 32x32px pixel art food icons floating in the background.
+- **Smart Loot**: Displays top 5 recipes with simulated cooking time and region stats.
 
 ## 🛠️ Tech Stack
 
 - **HTML5**: Semantic structure.
-- **CSS3**: Custom properties, Flexbox/Grid, Animations, and Glassmorphism effects.
-- **JavaScript (Vanilla)**: DOM manipulation, Async/Await API fetching.
+- **CSS3 / NES.css**: 8-bit CSS Framework for the core aesthetic.
+- **JavaScript (Vanilla)**: DOM manipulation, Async/Await, pixel sprite generation.
 - **API**: [TheMealDB](https://www.themealdb.com/api.php) (Public API).
 
-## 🚀 How to Use
+## 🚀 Start Quest
 
 1.  Clone this repository or download the files.
 2.  Open `index.html` in your web browser.
-3.  Enter an ingredient in the search box (e.g., "Beef").
-4.  Hit **Enter** or click the **Search icon**.
-5.  Click **"View Recipe"** on any card to see the full cooking instructions.
+3.  Enter an ingredient (e.g., "Pizza").
+4.  Hit the **"Hit!"** button.
+5.  Click **"Start Quest"** on any card to view instructions.
 
-## 🔮 Future Improvements
+## 🔮 Future Updates
 
-- [ ] Add "Favorites" functionality to save recipes.
-- [ ] Add more detailed filter options (Category, Area).
-- [ ] Dark/Light mode toggle.
+- [ ] "Inventory" system to save favorite recipes.
+- [ ] Sound effects (8-bit "blip" on click).
+- [ ] Dark dungeon mode.
 
 ---
 

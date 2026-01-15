@@ -1,63 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gourmet Recipe Finder</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="background-glob"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gourmet Discovery: Pixel Edition</title>
+    <!-- NES.css -->
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DotGothic16&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
     <div class="container">
-      <header>
-        <h1>Gourmet <span class="highlight">Discovery</span></h1>
-        <p>Find your next culinary masterpiece.</p>
-      </header>
+        <header style="margin-bottom: 2rem; text-align: center;">
+            <i class="nes-icon star is-large"></i>
+            <h1>Kitchen RPG</h1>
+            <p>Quest: Find the Recipe</p>
+        </header>
 
-      <section class="search-section">
-        <div class="search-box">
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Enter an ingredient (e.g., Chicken)..."
-            autocomplete="off"
-          />
-          <button id="searchBtn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </button>
+        <section class="nes-container with-title is-centered">
+            <p class="title">Inventory Search</p>
+            <div class="search-box">
+                <div class="nes-field is-inline">
+                    <input type="text" id="searchInput" class="nes-input" placeholder="Name of ingredient...">
+                    <button id="searchBtn" class="nes-btn is-primary">Hit!</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- HP Bar Loader (Hidden by default) -->
+        <div id="loadingBar" class="nes-container is-rounded" style="display: none; margin-top: 2rem;">
+            <p>Loading Data...</p>
+            <progress class="nes-progress is-success" value="0" max="100"></progress>
         </div>
-      </section>
 
-      <main id="recipeContainer" class="recipe-grid">
-        <!-- Results will appear here -->
-        <div class="empty-state">
-          <p>Start by typing an ingredient to explore delicious recipes.</p>
-        </div>
-      </main>
+        <main id="recipeContainer" class="recipe-grid" style="margin-top: 3rem;">
+            <!-- Results will appear here -->
+            <div class="nes-container is-dark with-title">
+                <p class="title">Log</p>
+                <p>Waiting for quest input...</p>
+            </div>
+        </main>
 
-      <footer>
-          <p>Designed & Built by <span class="watermark-name">Julius Pelegrino</span></p>
-      </footer>
+        <footer style="margin-top: 3rem; text-align: center;">
+            <p class="nes-text is-disabled">Designed & Built by Julius Pelegrino</p>
+        </footer>
     </div>
+
+    <!-- Floating Icons Container -->
+    <div id="emoji-container"></div>
+
     <script src="script.js"></script>
-  </body>
+</body>
 </html>

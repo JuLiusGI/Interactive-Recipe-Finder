@@ -1,6 +1,8 @@
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
 const recipeContainer = document.getElementById('recipeContainer');
+const loadingBar = document.getElementById('loadingBar');
+const progressBar = loadingBar.querySelector('progress');
 
 const API_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 
@@ -13,17 +15,38 @@ async function performSearch() {
     const query = searchInput.value.trim();
     if (!query) return;
 
-    // Show loading state
-    recipeContainer.innerHTML = '<div class="empty-state"><p>Searching for deliciousness...</p></div>';
+    // Show Loading Bar (Health Bar style)
+    recipeContainer.style.display = 'none';
+    loadingBar.style.display = 'block';
+    
+    // Simulate "Loading" filling up
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += 20;
+        progressBar.value = progress;
+        if (progress >= 100) clearInterval(interval);
+    }, 100);
 
     try {
         const response = await fetch(`${API_URL}${query}`);
         const data = await response.json();
 
-        renderRecipes(data.meals);
+        // Wait a tiny bit for the "bar" to finish visually
+        setTimeout(() => {
+            renderRecipes(data.meals);
+            loadingBar.style.display = 'none';
+            recipeContainer.style.display = 'grid';
+        }, 600);
+
     } catch (error) {
         console.error('Error fetching recipes:', error);
-        recipeContainer.innerHTML = '<div class="empty-state"><p>Oops! Something went wrong. Please try again.</p></div>';
+        loadingBar.style.display = 'none';
+        recipeContainer.style.display = 'grid';
+        recipeContainer.innerHTML = `
+            <div class="nes-container is-dark with-title">
+                <p class="title">Error</p>
+                <p>Quest Failed. Dragon ate the connection.</p>
+            </div>`;
     }
 }
 
@@ -32,13 +55,13 @@ function renderRecipes(meals) {
 
     if (!meals) {
         recipeContainer.innerHTML = `
-            <div class="empty-state">
-                <p>No recipes found for "${searchInput.value}". Try another ingredient!</p>
+            <div class="nes-container is-dark with-title">
+                <p class="title">Empty Info</p>
+                <p>No recipes found for "${searchInput.value}".</p>
             </div>`;
         return;
     }
 
-    // Limit to 5 results
     const topMeals = meals.slice(0, 5);
 
     topMeals.forEach(meal => {
@@ -51,55 +74,60 @@ function createRecipeCard(meal) {
     const cookTime = Math.floor(Math.random() * (60 - 20 + 1) + 20); // Simulate 20-60 mins
     
     const div = document.createElement('div');
-    div.classList.add('recipe-card');
-
+    div.classList.add('nes-container', 'with-title', 'is-centered', 'recipe-card-nes');
+    
+    // Title is part of the container structure in NES.css, but complex to manipulate dynamically strictly
+    // So we use standard structure inside
+    
     div.innerHTML = `
-        <img src="${meal.strMealThumb}" alt="${meal.strMeal}" class="card-image">
-        <div class="card-content">
-            <h3 class="card-title">${meal.strMeal}</h3>
+        <p class="title">${meal.strMeal}</p>
+        <div style="background-color: #fff; padding: 0.5rem; margin-bottom: 1rem; border: 4px solid #000;">
+            <img src="${meal.strMealThumb}" alt="${meal.strMeal}" class="card-image" style="width: 100%; display: block;">
+        </div>
+        <div class="card-content" style="text-align: left;">
             <div class="card-meta">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                <span>${cookTime} mins</span>
-                <span style="margin: 0 5px">•</span>
-                <span>${meal.strArea}</span>
+                <i class="nes-icon coin is-small"></i> Time: ${cookTime}m<br>
+                <i class="nes-icon trophy is-small"></i> Area: ${meal.strArea}
             </div>
-            <div class="card-actions">
-                <a href="${meal.strSource || meal.strYoutube}" target="_blank" class="btn-recipe">View Recipe</a>
-            </div>
+            <a href="${meal.strSource || meal.strYoutube}" target="_blank" class="nes-btn is-success btn-retro">Start Quest</a>
         </div>
     `;
 
     return div;
 }
 
-// Aesthetic: Floating Emojis
-function createFloatingEmojis() {
-    const emojis = ['🍕', '🍔', '🍟', '🌭', '🥞', '🥓', '🥪', '🌮', '🌯', '🥙', '🥗', '🍲', '🍝', '🍜', '🍣', '🍱', '🍛', '🍚', '🍗', '🍩', '🍪', '🍰', '🍫', '🍬', '🍭', '🍦'];
-    const container = document.createElement('div');
-    container.id = 'emoji-container';
-    document.body.prepend(container);
+// Pixel Art Asset Logic
+function createFloatingSprites() {
+    const icons = [
+        'assets/burger.png',
+        'assets/pizza.png',
+        'assets/chicken.png',
+        'assets/potion.png'
+    ];
+    
+    const container = document.getElementById('emoji-container');
+    const spriteCount = 15; // Fewer sprites to keep it clean
 
-    const emojiCount = 20;
-
-    for (let i = 0; i < emojiCount; i++) {
-        const span = document.createElement('span');
-        span.classList.add('floating-emoji');
-        span.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    for (let i = 0; i < spriteCount; i++) {
+        const img = document.createElement('img');
+        img.src = icons[Math.floor(Math.random() * icons.length)];
+        img.classList.add('pixel-sprite');
         
         // Randomize
         const left = Math.random() * 100; // 0-100%
         const delay = Math.random() * 10; // 0-10s
         const duration = 15 + Math.random() * 20; // 15-35s
-        const scale = 0.5 + Math.random() * 1.5; // 0.5-2x size
+        const scale = 1 + Math.random(); // 1-2x size (32px to 64px)
 
-        span.style.left = `${left}%`;
-        span.style.animationDelay = `-${delay}s`; // Start mid-animation
-        span.style.animationDuration = `${duration}s`;
-        span.style.fontSize = `${scale * 2}rem`;
+        img.style.left = `${left}%`;
+        img.style.animation = `floatPixel ${duration}s linear infinite`; // Explicit animation
+        img.style.animationDelay = `-${delay}s`;
+        img.style.width = `${32 * scale}px`;
+        img.style.height = `${32 * scale}px`;
 
-        container.appendChild(span);
+        container.appendChild(img);
     }
 }
 
 // Init
-createFloatingEmojis();
+createFloatingSprites();
